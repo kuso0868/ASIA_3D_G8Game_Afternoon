@@ -18,6 +18,9 @@ public class Chicken : MonoBehaviour
     public string _name = "G8雞";      // 字串 ""
     #endregion
 
+    [Header("檢物品位置")]
+    public Rigidbody rigCatch;
+
     public Transform tran;
     public Rigidbody rig;
     public Animator ani;
@@ -31,6 +34,17 @@ public class Chicken : MonoBehaviour
         Run();
         Bark();
         Catch();
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        print(other.name);
+
+        if(other.name == "雞腿")
+        {
+            Physics.IgnoreCollision(other, GetComponent<Collider>());
+            other.GetComponent<HingeJoint>().connectedBody = rigCatch;
+        }
     }
 
     #region 方法區域
